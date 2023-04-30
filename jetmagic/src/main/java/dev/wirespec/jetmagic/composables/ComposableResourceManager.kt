@@ -879,8 +879,15 @@ open class ComposableResourceManager {
             )
 
         if (composableResource.viewmodelClass != null) {
-            composableInstance.viewmodel = composableResource.viewmodelClass.newInstance() as ViewModel
+            if (composableResource.onCreateViewmodel != null) {
+                composableInstance.viewmodel = composableResource.onCreateViewmodel.invoke()
+            } else {
+                composableInstance.viewmodel = composableResource.viewmodelClass.newInstance() as ViewModel
+            }
+//            composableInstance.viewmodel = composableResource.viewmodelClass.newInstance() as ViewModel
         }
+
+
 
         return composableInstance
     }
