@@ -681,7 +681,7 @@ class NavigationManager {
                 return composableInstance
             }
 
-            val c = composableInstance.composables.firstOrNull { it.id == id }
+            val c = composableInstance.findComposableById(id)//.composables.firstOrNull { it.id == id }
 
             if (c != null) {
                 if (returnParent) {
@@ -692,7 +692,17 @@ class NavigationManager {
             }
         }
 
-        val composableInstance = trash.firstOrNull { it.id == id }
+//        val composableInstance = trash.firstOrNull { it.id == id }
+        var composableInstance: ComposableInstance? = null
+        for (tComposable in trash) {
+            composableInstance = tComposable.findComposableById(id)
+            if (composableInstance != null) {
+                if (returnParent) {
+                    composableInstance = tComposable
+                }
+                break;
+            }
+        }
 
         if (composableInstance != null) {
             return composableInstance
